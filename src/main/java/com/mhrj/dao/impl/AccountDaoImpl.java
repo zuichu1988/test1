@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * jdbcTemplate模板工具类     
@@ -38,6 +40,8 @@ public class AccountDaoImpl implements IAccountDAO {
     }
     //条件查询
     public Account findAccountById(int id) {
+//        List<LinkedHashMap> list1=jdbcTemplate.query("select * from account where id = ?", new Object[]{id});
+        List<Map<String,Object>> list1=jdbcTemplate.queryForList("select * from account where id = ?", new Object[]{id});
         List<Account> list = jdbcTemplate.query("select * from account where id = ?", new Object[]{id}, new BeanPropertyRowMapper<Account>(Account.class));
         if(list!=null && list.size()>0){
             Account account = list.get(0);
